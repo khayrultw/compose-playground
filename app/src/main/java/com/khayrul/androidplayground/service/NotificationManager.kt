@@ -1,12 +1,12 @@
 package com.khayrul.androidplayground.service
 
-import android.app.*
+import android.app.NotificationChannel
 import androidx.core.app.RemoteInput
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.khayrul.androidplayground.R
