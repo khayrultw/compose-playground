@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android Playground</string>
+    <string name="service_name">Notification service</string>
 </resources>
