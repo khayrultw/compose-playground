@@ -24,7 +24,9 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.NotificationPlayground.route
                         ) {
-                            NotificationPlayground()
+                            NotificationPlayground(
+                                createNotification = {title, text -> createNotification(title, text) }
+                            )
                         }
                     }
                 }
@@ -32,7 +34,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun createNotification() {
-        NotificationManager.createNotification(this)
+    private fun createNotification(title: String, text: String) {
+        NotificationManager.createNotification(this, title, text)
     }
 }
