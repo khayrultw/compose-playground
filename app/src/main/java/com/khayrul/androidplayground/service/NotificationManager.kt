@@ -1,5 +1,6 @@
 package com.khayrul.androidplayground.service
 
+import android.app.Notification
 import android.app.NotificationChannel
 import androidx.core.app.RemoteInput
 import android.app.NotificationManager
@@ -30,9 +31,8 @@ class NotificationManager {
             }
         }
 
-        fun createNotification(context: Context, title: String, text: String) {
+        fun getNotification(context: Context, title: String, text: String): Notification {
             createNotificationChannel(context)
-
             val actionIntent = Intent(context, MainActivity::class.java)
             actionIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             val pendingIntent = PendingIntent.getActivity(context, 0, actionIntent, PendingIntent.FLAG_ONE_SHOT)
@@ -47,7 +47,7 @@ class NotificationManager {
                 pendingIntent
             ).addRemoteInput(remoteInput).build()
 
-            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+            return NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_fav)
                 .setContentTitle(title)
                 .setContentText(text)
@@ -55,9 +55,11 @@ class NotificationManager {
                 .addAction(action)
                 .setAutoCancel(true)
                 .build()
+        }
 
+        fun createNotification(context: Context, title: String, text: String) {
             val notificationManager = NotificationManagerCompat.from(context)
-            notificationManager.notify(NOTIFICATION_ID, notification)
+            notificationManager.notify(NOTIFICATION_ID, getNotification(context, title, text))
         }
     }
 }

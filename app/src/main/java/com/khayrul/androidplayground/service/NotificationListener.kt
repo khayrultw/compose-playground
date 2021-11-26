@@ -13,6 +13,10 @@ class NotificationListener : NotificationListenerService() {
 
     val TAG = "NotificationListener"
 
+    init {
+        Log.d(TAG, "Hello exception")
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return START_STICKY
     }
@@ -28,7 +32,7 @@ class NotificationListener : NotificationListenerService() {
             val bundle = Bundle()
             val intent = Intent()
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            bundle.putCharSequence(notificationExt.remoteInputs[0].resultKey, "Hello shuvo")
+            bundle.putCharSequence(notificationExt.remoteInputs[0].resultKey, "Hello Rana vai")
             RemoteInput.addResultsToIntent(notificationExt.remoteInputs.toTypedArray(), intent, bundle)
 
             try {
