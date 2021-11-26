@@ -1,14 +1,13 @@
 package com.khayrul.androidplayground.presentation
 
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -21,7 +20,7 @@ import com.khayrul.androidplayground.presentation.notificaion_playground.Notific
 import com.khayrul.androidplayground.presentation.ui.theme.AndroidPlaygroundTheme
 import com.khayrul.androidplayground.presentation.util.Screen
 import com.khayrul.androidplayground.service.KeepAliveService
-import com.khayrul.androidplayground.service.NotificationManager
+import com.khayrul.androidplayground.service.NotificationUtil
 
 class MainActivity : ComponentActivity() {
 
@@ -35,8 +34,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        Log.d(TAG, "onResume")
+        NotificationUtil.createNotificationChannel(this)
 
         setContent {
             AndroidPlaygroundTheme {
@@ -56,6 +54,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    fun startNotificationService() {
+        val intentService = Intent(this, KeepAliveService::class.java)
+        intentService.putExtra("input", "Notification Service")
+        startService(intentService)
+    }
+
     private fun createNotification(title: String, text: String) {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
 //            val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
@@ -64,7 +68,7 @@ class MainActivity : ComponentActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             checkPermission(android.Manifest.permission.FOREGROUND_SERVICE)
         }
-        NotificationManager.createNotification(this, title, text)
+        startNotificationService()
     }
 
     @RequiresApi(Build.VERSION_CODES.P)

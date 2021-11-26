@@ -1,26 +1,34 @@
 package com.khayrul.androidplayground.service
 
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
-import android.service.notification.NotificationListenerService
 import android.util.Log
+import com.khayrul.androidplayground.presentation.MainActivity
 
 class KeepAliveService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            Log.d("KeepAliveService", "onResume00000")
-            startForeground(this)
-        }
     }
 
     override fun onBind(p0: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startNotificationService()
+        Log.d("KeepAliveService", "KeepAliveService")
+        intent?.let {
+            Log.d("KeepAliveService", "KeepAliveService inside")
+            val notificationIntent = Intent(this, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
+            val input = it.getStringExtra("input").toString()
+            val notification = NotificationUtil.getNotificationBuilder(this,"Awesome", input)
+                .setContentIntent(pendingIntent)
+                .build()
+
+            startForeground(0, notification)
+        }
         return START_STICKY
     }
 
@@ -43,16 +51,5 @@ class KeepAliveService : Service() {
         val broadcastIntent = Intent(this, NotificationServiceRestartReceiver::class.java)
         broadcastIntent.action =  "RestartService-Broadcast"
         sendBroadcast(broadcastIntent);
-    }
-
-    private fun startNotificationService() {
-        val intent = Intent(this, NotificationListenerService::class.java)
-        startService(intent)
-    }
-
-    private fun startForeground(service: Service) {
-        Log.d("DEBUG", "startForeground")
-        val notification = NotificationManager.getNotification(this, "hello", "hello")
-        service.startForeground(10, notification)
     }
 }
