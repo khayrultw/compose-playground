@@ -4,7 +4,7 @@ import android.app.PendingIntent
 import android.app.RemoteInput
 import android.os.Bundle
 
-data class NotificationExtender(
+data class WearableNotification(
     val tag: String?,
     val name: String,
     val pendingIntent: PendingIntent?,
