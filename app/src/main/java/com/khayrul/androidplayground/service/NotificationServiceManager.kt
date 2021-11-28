@@ -29,16 +29,8 @@ class NotificationServiceManager private constructor() {
             }
         }
 
-        fun notificationListenerEnabled(context: Context): Boolean {
-            val cn = ComponentName(context, NotificationListener::class.java)
-            val flat = Settings.Secure.getString(
-                context.contentResolver,
-                "enabled_notification_listeners"
-            )
-            return flat != null && flat.contains(cn.flattenToString())
-        }
-
         fun startForegroundTestService(context: Context) {
+            askNotificationListenerPerm(context)
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val intent = Intent(context, ForegroundNotificationService::class.java)
                 context.startForegroundService(intent)
@@ -55,16 +47,6 @@ class NotificationServiceManager private constructor() {
             }
         }
 
-        fun askNotificationListenerPerm(context: Context) {
-            if(notificationListenerEnabled(context)) {
-                Log.d(Constants.TAG, "Enabled")
-                return
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
-                context.startActivity(intent)
-            }
-        }
 
         fun createNotification(context: Context, title: String, text: String) {
             val notification = NotificationCompat.Builder(context, Constants.CHANNEL_ID)
@@ -75,6 +57,26 @@ class NotificationServiceManager private constructor() {
                 .build()
 
             NotificationManagerCompat.from(context).notify(Constants.NOTIFICATION_ID, notification)
+        }
+
+        private fun notificationListenerEnabled(context: Context): Boolean {
+            val cn = ComponentName(context, NotificationListener::class.java)
+            val flat = Settings.Secure.getString(
+                context.contentResolver,
+                "enabled_notification_listeners"
+            )
+            return flat != null && flat.contains(cn.flattenToString())
+        }
+
+        private fun askNotificationListenerPerm(context: Context) {
+            if(notificationListenerEnabled(context)) {
+                Log.d(Constants.TAG, "Enabled")
+                return
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+                context.startActivity(intent)
+            }
         }
     }
 }
