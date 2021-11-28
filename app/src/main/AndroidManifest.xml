@@ -33,7 +33,7 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-        <receiver android:name=".service.NotificationServiceReceiver"
+        <receiver android:name=".recever.NotificationServiceReceiver"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
             android:enabled="true"
             android:exported="false">

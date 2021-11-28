@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
-import com.khayrul.androidplayground.core.Constants
+import com.khayrul.androidplayground.core.constants.Constants
+import com.khayrul.androidplayground.domain.model.WearableNotification
+import com.khayrul.androidplayground.core.preference.PreferencesManager
 import com.khayrul.androidplayground.util.NotificationUtils
-import com.khayrul.androidplayground.util.PreferencesManager
 import java.lang.Exception
 
 class NotificationListener : NotificationListenerService() {
