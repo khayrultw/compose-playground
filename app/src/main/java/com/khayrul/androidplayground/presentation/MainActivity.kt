@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                             route = Screen.WorkManagerPlayground.route
                         ) {
                             WorkManagerPlayground(
-                                createWork = { createWorker() }
+                                createWork = { time -> createWorker(time) }
                             )
                         }
                     }
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun createWorker() {
+    private fun createWorker(time: Long) {
         val workRequestConstraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
         val sampleWork = OneTimeWorkRequest.Builder(TestWorker::class.java)
             .setInputData(data.build())
             .setConstraints(workRequestConstraints)
-            .setInitialDelay(10, TimeUnit.SECONDS)
+            .setInitialDelay(time*60, TimeUnit.SECONDS)
             .build()
 
         WorkManager.getInstance(this).enqueue(sampleWork)
