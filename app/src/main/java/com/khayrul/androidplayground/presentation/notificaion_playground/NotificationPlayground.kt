@@ -45,15 +45,25 @@ fun NotificationPlayground(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { NotificationServiceManager.startForegroundTestService(context) }) {
-            Text(text = "Start Service in background")
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { NotificationServiceManager.stopForegroundTestService(context) }) {
+        Button(
+            modifier = Modifier.fillMaxWidth(0.7f),
+            onClick = { NotificationServiceManager.stopForegroundTestService(context)
+            }
+        ) {
             Text(text = "Stop Service")
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
+            modifier = Modifier.fillMaxWidth(0.7f),
+            onClick = {
+                NotificationServiceManager.startForegroundTestService(context)
+            }
+        ) {
+            Text(text = "Start Service in background")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            modifier = Modifier.fillMaxWidth(0.7f),
             onClick = {
                 NotificationServiceManager.createNotification(
                     context = context,

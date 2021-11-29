@@ -14,6 +14,7 @@ import com.khayrul.androidplayground.presentation.ui.theme.AndroidPlaygroundThem
 import com.khayrul.androidplayground.service.NotificationServiceManager
 import com.khayrul.androidplayground.core.preference.PreferencesManager
 import com.khayrul.androidplayground.core.work.TestWorker
+import com.khayrul.androidplayground.home.Home
 import com.khayrul.androidplayground.presentation.notificaion_playground.NotificationPlayground
 import com.khayrul.androidplayground.presentation.util.Screen
 import com.khayrul.androidplayground.presentation.work_manager_playground.WorkManagerPlayground
@@ -34,8 +35,13 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.WorkManagerPlayground.route
+                        startDestination = Screen.Home.route
                     ) {
+                        composable(
+                            route = Screen.Home.route
+                        ) {
+                            Home(navController = navController)
+                        }
                         composable(
                             route = Screen.NotificationPlayground.route
                         ) {

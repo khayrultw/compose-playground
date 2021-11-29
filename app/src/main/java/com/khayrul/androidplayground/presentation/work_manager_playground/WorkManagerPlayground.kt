@@ -1,8 +1,6 @@
 package com.khayrul.androidplayground.presentation.work_manager_playground
 
 import android.app.TimePickerDialog
-import android.os.Debug
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -14,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.khayrul.androidplayground.core.constants.Constants
 import java.util.*
 
 @Composable
@@ -29,9 +26,12 @@ fun WorkManagerPlayground(
             val _h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             val _m = Calendar.getInstance().get(Calendar.MINUTE)
             time.value = hour*60L + minute - _h*60L - _m
+            if(time.value < 0) {
+                time.value += 24*60
+            }
         },
-        5,
-        5,
+        Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+        Calendar.getInstance().get(Calendar.MINUTE),
         false
     )
 
@@ -44,7 +44,11 @@ fun WorkManagerPlayground(
             Text(text = "Time: ${time.value} minutes" )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { createWork(time.value) }) {
+        Button(
+            modifier = Modifier.fillMaxWidth(0.7f),
+            onClick = { createWork(time.value)
+            }
+        ) {
             Text(text = "Create Work")
         }
     }
