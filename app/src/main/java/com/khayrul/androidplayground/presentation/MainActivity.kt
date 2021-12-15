@@ -5,19 +5,13 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.work.*
 import com.khayrul.androidplayground.core.constants.Constants
 import com.khayrul.androidplayground.presentation.ui.theme.AndroidPlaygroundTheme
 import com.khayrul.androidplayground.service.NotificationServiceManager
 import com.khayrul.androidplayground.core.preference.PreferencesManager
 import com.khayrul.androidplayground.core.work.TestWorker
-import com.khayrul.androidplayground.home.Home
-import com.khayrul.androidplayground.presentation.notificaion_playground.NotificationPlayground
-import com.khayrul.androidplayground.presentation.util.Screen
-import com.khayrul.androidplayground.presentation.work_manager_playground.WorkManagerPlayground
+import com.khayrul.androidplayground.presentation.navigation_screen.NavigationScreen
 import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
@@ -32,31 +26,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             AndroidPlaygroundTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = Screen.Home.route
-                    ) {
-                        composable(
-                            route = Screen.Home.route
-                        ) {
-                            Home(navController = navController)
-                        }
-                        composable(
-                            route = Screen.NotificationPlayground.route
-                        ) {
-                            NotificationPlayground(
-                                preferencesManager = preferencesManager
-                            )
-                        }
-                        composable(
-                            route = Screen.WorkManagerPlayground.route
-                        ) {
-                            WorkManagerPlayground(
-                                createWork = { time -> createWorker(time) }
-                            )
-                        }
-                    }
+                    NavigationScreen(
+                        preferencesManager = preferencesManager,
+                        createWork = {time -> createWorker(time)}
+                    )
                 }
             }
         }

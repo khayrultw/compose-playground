@@ -1,7 +1,7 @@
 package com.khayrul.androidplayground.presentation.util
 
-sealed class Screen(val route: String) {
-    object NotificationPlayground : Screen("notification_playground")
-    object WorkManagerPlayground : Screen("work_manager_playground")
-    object Home : Screen("home")
+sealed class Screen(val route: String, val title: String) {
+    object NotificationPlayground : Screen("notification_playground", "Notification Playground")
+    object WorkManagerPlayground : Screen("work_manager_playground", "Work Manager Playground")
+    object Home : Screen("home", "Home")
 }
