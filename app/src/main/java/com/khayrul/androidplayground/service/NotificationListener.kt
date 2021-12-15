@@ -21,7 +21,6 @@ class NotificationListener : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
 
-        Log.d(Constants.TAG, "Hello status bar notification")
         super.onNotificationPosted(sbn)
 
         if(!PreferencesManager.getInstance(this).isAutoReplyServiceEnabled()) {

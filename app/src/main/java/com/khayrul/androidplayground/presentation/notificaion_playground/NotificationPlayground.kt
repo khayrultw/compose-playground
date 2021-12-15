@@ -15,11 +15,11 @@ import com.khayrul.androidplayground.core.preference.PreferencesManager
 import com.khayrul.androidplayground.service.NotificationServiceManager
 
 @Composable
-fun NotificationPlayground(
-    preferencesManager: PreferencesManager
-) {
+fun NotificationPlayground() {
 
     val context = LocalContext.current
+    val preferencesManager = PreferencesManager.getInstance(context)
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,

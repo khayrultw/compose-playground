@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,7 +21,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.khayrul.androidplayground.R
-import com.khayrul.androidplayground.core.preference.PreferencesManager
 import com.khayrul.androidplayground.presentation.alarm_manager_playground.AlarmManagerPlayground
 import com.khayrul.androidplayground.presentation.notificaion_playground.NotificationPlayground
 import com.khayrul.androidplayground.presentation.util.Screen
@@ -29,10 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun NavigationScreen(
-    preferencesManager: PreferencesManager,
-    createWork: (time: Long) -> Unit
-) {
+fun NavigationScreen() {
 
     val scaffoldState = rememberScaffoldState( rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
@@ -50,9 +47,7 @@ fun NavigationScreen(
         }
     ) {
         Navigation(
-            navController = navController,
-            preferencesManager = preferencesManager,
-            createWork = createWork
+            navController = navController
         )
     }
 }
@@ -85,6 +80,8 @@ fun Drawer(
         Screen.WorkManagerPlayground,
         Screen.AlarmManagerPlayground
     )
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     Column(modifier = Modifier.background(Color.White)) {
         Row(
@@ -104,10 +101,9 @@ fun Drawer(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+        Spacer(modifier = Modifier.height(8.dp))
+        Divider()
+        Spacer(modifier = Modifier.height(8.dp))
 
         items.forEach { item ->
             DrawerItem(item = item, selected = currentRoute == item.route ) {
@@ -131,13 +127,14 @@ fun Drawer(
 
 @Composable
 fun DrawerItem(item: Screen, selected: Boolean, onItemClick: (Screen) -> Unit) {
-    val background = if(selected) Color.LightGray else Color.White
+    val background = if(selected) colorResource(R.color.grey200) else Color.White
     
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onItemClick(item) }
             .height(45.dp)
+            .padding(start = 10.dp, end = 10.dp)
             .background(background)
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -148,19 +145,17 @@ fun DrawerItem(item: Screen, selected: Boolean, onItemClick: (Screen) -> Unit) {
 
 @Composable
 fun Navigation(
-    navController: NavHostController,
-    preferencesManager: PreferencesManager,
-    createWork: (time: Long) -> Unit
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
         startDestination = Screen.NotificationPlayground.route
     ) {
         composable(route = Screen.NotificationPlayground.route) {
-            NotificationPlayground(preferencesManager = preferencesManager)
+            NotificationPlayground()
         }
         composable(route = Screen.WorkManagerPlayground.route) {
-            WorkManagerPlayground(createWork = createWork)
+            WorkManagerPlayground()
         }
         composable(
             route = Screen.AlarmManagerPlayground.route

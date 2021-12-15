@@ -12,7 +12,7 @@ import com.khayrul.androidplayground.R
 import com.khayrul.androidplayground.core.constants.Constants
 import com.khayrul.androidplayground.presentation.MainActivity
 import com.khayrul.androidplayground.core.preference.PreferencesManager
-import com.khayrul.androidplayground.recever.NotificationServiceReceiver
+import com.khayrul.androidplayground.receiver.NotificationServiceReceiver
 
 class ForegroundNotificationService : Service() {
 

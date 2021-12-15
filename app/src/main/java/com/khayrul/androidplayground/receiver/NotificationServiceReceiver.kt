@@ -1,4 +1,4 @@
-package com.khayrul.androidplayground.recever
+package com.khayrul.androidplayground.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
