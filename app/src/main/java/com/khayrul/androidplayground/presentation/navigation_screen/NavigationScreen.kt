@@ -21,6 +21,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.khayrul.androidplayground.R
 import com.khayrul.androidplayground.core.preference.PreferencesManager
+import com.khayrul.androidplayground.presentation.alarm_manager_playground.AlarmManagerPlayground
 import com.khayrul.androidplayground.presentation.notificaion_playground.NotificationPlayground
 import com.khayrul.androidplayground.presentation.util.Screen
 import com.khayrul.androidplayground.presentation.work_manager_playground.WorkManagerPlayground
@@ -41,10 +42,18 @@ fun NavigationScreen(
         scaffoldState = scaffoldState,
         topBar = { TopBar(scope = scope, scaffoldState = scaffoldState)},
         drawerContent = {
-            Drawer(scope = scope, scaffoldState = scaffoldState, navController = navController)
+            Drawer(
+                scope = scope,
+                scaffoldState = scaffoldState,
+                navController = navController
+            )
         }
     ) {
-        Navigation(navController = navController, preferencesManager = preferencesManager, createWork = createWork)
+        Navigation(
+            navController = navController,
+            preferencesManager = preferencesManager,
+            createWork = createWork
+        )
     }
 }
 
@@ -73,7 +82,8 @@ fun Drawer(
 ) {
     val items = listOf(
         Screen.NotificationPlayground,
-        Screen.WorkManagerPlayground
+        Screen.WorkManagerPlayground,
+        Screen.AlarmManagerPlayground
     )
 
     Column(modifier = Modifier.background(Color.White)) {
@@ -137,13 +147,25 @@ fun DrawerItem(item: Screen, selected: Boolean, onItemClick: (Screen) -> Unit) {
 }
 
 @Composable
-fun Navigation(navController: NavHostController, preferencesManager: PreferencesManager, createWork: (time: Long) -> Unit) {
-    NavHost(navController = navController, startDestination = Screen.NotificationPlayground.route) {
+fun Navigation(
+    navController: NavHostController,
+    preferencesManager: PreferencesManager,
+    createWork: (time: Long) -> Unit
+) {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.NotificationPlayground.route
+    ) {
         composable(route = Screen.NotificationPlayground.route) {
             NotificationPlayground(preferencesManager = preferencesManager)
         }
         composable(route = Screen.WorkManagerPlayground.route) {
             WorkManagerPlayground(createWork = createWork)
+        }
+        composable(
+            route = Screen.AlarmManagerPlayground.route
+        ) {
+            AlarmManagerPlayground()
         }
     }
 }
