@@ -9,7 +9,7 @@ import android.util.Log
 import com.khayrul.androidplayground.core.constants.Constants
 import com.khayrul.androidplayground.domain.model.WearableNotification
 import com.khayrul.androidplayground.core.preference.PreferencesManager
-import com.khayrul.androidplayground.util.NotificationUtils
+import com.khayrul.androidplayground.core.util.NotificationUtils
 import java.lang.Exception
 
 class NotificationListener : NotificationListenerService() {

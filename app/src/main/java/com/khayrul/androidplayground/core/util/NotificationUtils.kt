@@ -1,4 +1,4 @@
-package com.khayrul.androidplayground.util
+package com.khayrul.androidplayground.core.util
 
 import android.app.PendingIntent
 import android.service.notification.StatusBarNotification

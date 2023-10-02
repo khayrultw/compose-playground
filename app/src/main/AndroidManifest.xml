@@ -15,8 +15,7 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AndroidPlayground.NoActionBar">
+            android:theme="@style/Theme.AndroidPlayground">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
