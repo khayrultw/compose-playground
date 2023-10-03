@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.khayrul.androidplayground"
+    namespace = "com.khayrul.playground"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.khayrul.androidplayground"
+        applicationId = "com.khayrul.playground"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
