@@ -15,9 +15,9 @@ import kotlinx.coroutines.runBlocking
 import kotlin.math.abs
 import kotlin.math.min
 
-external fun getIntArray(w: Int, h: Int, scale: Int): IntArray
+external fun getIntArray(w: Int, h: Int, scale: Float): IntArray
 
-fun getMandelNative(w: Int, h: Int, scale: Int): Bitmap {
+fun getMandelNative(w: Int, h: Int, scale: Float): Bitmap {
     val arr = getIntArray(w, h, scale)
     return Bitmap.createBitmap(arr, w, h, Bitmap.Config.ARGB_8888)
 }
