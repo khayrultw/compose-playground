@@ -1,6 +1,5 @@
 #include <jni.h>
 #include <iostream>
-#include "complex"
 #include "string"
 #include "thread"
 
@@ -24,24 +23,34 @@ using namespace std;
 //      }
 //    }
 
-complex<float> getComplex(int x, int w, int y, int h, float s) {
+struct complex {
+    float x, y;
+
+    complex(float x, float y): x(x), y(y) {}
+
+    complex operator*(const complex b) const {
+        return {
+           x*b.x - y*b.y,
+           x*b.y + y*b.x
+        };
+    }
+
+    complex operator+(const complex b) const {
+        return { x+b.x, y+b.y};
+    }
+};
+
+complex getComplex(int x, int w, int y, int h, float s) {
     auto x1 = (float)(4.0*x/w - 2);
     auto y1 = (float )(4.0*y/h - 2);
     return {-0.5f+x1/s, y1/s};
 }
 
-int mandel(complex<float> z) {
-    complex<float> zn(0.0, 0.0);
+int mandel(complex z) {
+    complex zn(0.0, 0.0);
     for(int i = 0; i < 200; i += 2) {
         zn = zn*zn + z;
-        if(abs(real(zn))+ abs(imag(zn)) > 300) {
-            int g = 0xffffff*i/200;
-            int index = (int)(4.0f*i/200);
-            return (0xff << 24) | g;
-        }
-
-        zn = zn*zn + z;
-        if(abs(real(zn))+ abs(imag(zn)) > 300) {
+        if(abs(zn.x)+ abs(zn.y) > 300) {
             int g = 0xffffff*i/200;
             int index = (int)(4.0f*i/200);
             return (0xff << 24) | g;
@@ -74,14 +83,13 @@ void test(jint* result, int l, int r, int w, int h, jfloat scale) {
 
 extern "C"
 JNIEXPORT jintArray JNICALL
-Java_com_khayrul_playground_core_util_UtilsKt_getIntArray(JNIEnv *env, jclass clazz, jint w, jint h,
-                                                          jfloat scale) {
+Java_com_khayrul_playground_core_util_UtilsKt_getIntArray(JNIEnv *env, jclass clazz, jint w, jint h, jfloat scale) {
     jint* result = new jint[w*h];
-    thread thr[20];
+    thread thr[1];
 
-    int d = w/20;
+    int d = w/1;
 
-    for(int i = 0; i < 20; i++) {
+    for(int i = 0; i < 1; i++) {
         thr[i] = thread(test, result, i * d, (i + 1) * d, w, h, scale);
     }
 

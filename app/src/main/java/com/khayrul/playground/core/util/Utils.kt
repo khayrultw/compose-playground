@@ -45,9 +45,9 @@ fun mandelbrot(z: Complex): Color {
 fun getMandel(w: Int, h: Int, scale: Float): Bitmap {
     val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
     val jobs = mutableListOf<Job>()
-    val d = w / 10
+    val d = w / 1
 
-    for(k in 0 until 10) {
+    for(k in 0 until 1) {
         jobs.add(calc(bitmap, k*d, (k+1)*d, w, h, scale))
     }
 

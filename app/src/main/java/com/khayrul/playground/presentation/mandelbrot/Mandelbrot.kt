@@ -32,6 +32,10 @@ fun Mandelbrot() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        AsyncImage(model = MyApp.mandelbrot, contentDescription = "")
+        AsyncImage(
+            modifier = Modifier.fillMaxSize(),
+            model = MyApp.mandelbrot,
+            contentDescription = ""
+        )
     }
 }
