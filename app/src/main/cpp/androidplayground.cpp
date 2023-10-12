@@ -85,11 +85,11 @@ extern "C"
 JNIEXPORT jintArray JNICALL
 Java_com_khayrul_playground_core_util_UtilsKt_getIntArray(JNIEnv *env, jclass clazz, jint w, jint h, jfloat scale) {
     jint* result = new jint[w*h];
-    thread thr[1];
+    thread thr[15];
 
-    int d = w/1;
+    int d = w/15;
 
-    for(int i = 0; i < 1; i++) {
+    for(int i = 0; i < 15; i++) {
         thr[i] = thread(test, result, i * d, (i + 1) * d, w, h, scale);
     }
 

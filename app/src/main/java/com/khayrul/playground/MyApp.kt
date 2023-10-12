@@ -20,8 +20,8 @@ class MyApp: Application() {
         dScope.launch {
             var scale = 1
             Log.d("debugging", "START")
-            while (scale < 10) {
-                mandelbrot = getMandel(500, 500, scale.toFloat())
+            while (scale < 2) {
+                mandelbrot = getMandel(1000, 1000, scale.toFloat())
                 scale += 1
             }
             Log.d("debugging", "DONE")
