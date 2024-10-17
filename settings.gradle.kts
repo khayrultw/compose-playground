@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "File Manager"
+rootProject.name = "Compsoe Playground"
 include(":app")
- 
+include(":encfile")
