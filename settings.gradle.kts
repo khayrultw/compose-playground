@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Compsoe Playground"
 include(":app")
 include(":encfile")
+include(":shaders")
